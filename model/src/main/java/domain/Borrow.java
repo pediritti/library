@@ -1,9 +1,8 @@
 package domain;
 
-import org.joda.time.DateTime;
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table
@@ -16,19 +15,18 @@ public class Borrow implements Serializable {
     private long id;
     private User reader;
     private Book book;
-    private DateTime borrowDate;
-    private DateTime returnDate;
-    private DateTime expectedReturnDate;
+    private Date borrowDate;
+    private Date expectedReturnDate;
 
     public Borrow() {
 
     }
 
-    public Borrow(User reader, Book book, DateTime borrowDate, DateTime returnDate, DateTime expectedReturnDate) {
+    public Borrow(long id, User reader, Book book, Date borrowDate, Date expectedReturnDate) {
+        this.id = id;
         this.reader = reader;
         this.book = book;
         this.borrowDate = borrowDate;
-        this.returnDate = returnDate;
         this.expectedReturnDate = expectedReturnDate;
     }
 
@@ -56,27 +54,19 @@ public class Borrow implements Serializable {
         this.book = book;
     }
 
-    public DateTime getBorrowDate() {
+    public Date getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(DateTime borrowDate) {
+    public void setBorrowDate(Date borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public DateTime getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(DateTime returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public DateTime getExpectedReturnDate() {
+    public Date getExpectedReturnDate() {
         return expectedReturnDate;
     }
 
-    public void setExpectedReturnDate(DateTime expectedReturnDate) {
+    public void setExpectedReturnDate(Date expectedReturnDate) {
         this.expectedReturnDate = expectedReturnDate;
     }
 }
