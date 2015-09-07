@@ -2,15 +2,19 @@ package domain;
 
 import org.joda.time.DateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Borrow {
+@Table
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Borrow implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="borrow_id")
     private long id;
-    private Reader reader;
+    private User reader;
     private Book book;
     private DateTime borrowDate;
     private DateTime returnDate;
@@ -20,7 +24,7 @@ public class Borrow {
 
     }
 
-    public Borrow(Reader reader, Book book, DateTime borrowDate, DateTime returnDate, DateTime expectedReturnDate) {
+    public Borrow(User reader, Book book, DateTime borrowDate, DateTime returnDate, DateTime expectedReturnDate) {
         this.reader = reader;
         this.book = book;
         this.borrowDate = borrowDate;
@@ -36,11 +40,11 @@ public class Borrow {
         this.id = id;
     }
 
-    public Reader getReader() {
+    public User getReader() {
         return reader;
     }
 
-    public void setReader(Reader reader) {
+    public void setReader(User reader) {
         this.reader = reader;
     }
 

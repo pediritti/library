@@ -1,31 +1,31 @@
 package domain;
 
-import org.joda.time.DateTime;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
+@Table
 public class Book {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="book_id")
     private long id;
-    private String isbn;
+    @ManyToOne
     private Author author;
+    private String isbn;
     private String title;
-    private DateTime issueDate;
-    private boolean isAvailable;
+    private Date issueDate;
 
     public Book() {
-;
     }
 
-    public Book(String isbn, Author author, String title, DateTime issueDate, boolean isAvailable) {
-        this.isbn = isbn;
+    public Book(long id, Author author, String isbn, String title, Date issueDate) {
+        this.id = id;
         this.author = author;
+        this.isbn = isbn;
         this.title = title;
         this.issueDate = issueDate;
-        this.isAvailable = isAvailable;
     }
 
     public long getId() {
@@ -36,20 +36,20 @@ public class Book {
         this.id = id;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
     public Author getAuthor() {
         return author;
     }
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getTitle() {
@@ -60,19 +60,11 @@ public class Book {
         this.title = title;
     }
 
-    public DateTime getIssueDate() {
+    public Date getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(DateTime issueDate) {
+    public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
     }
 }

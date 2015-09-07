@@ -2,26 +2,28 @@ package domain;
 
 import org.joda.time.DateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Author extends Person {
+@Table
+public class Author implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="author_id")
     private long id;
-    private String email;
-    private DateTime birth;
+    private String firstName;
+    private String lastName;
 
     public Author() {
 
     }
 
-    public Author(String email, String firstName, String lastName, DateTime birth) {
-        this.email = email;
+    public Author(long id, String firstName, String lastName) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birth = birth;
     }
 
     public long getId() {
@@ -32,19 +34,19 @@ public class Author extends Person {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public DateTime getBirth() {
-        return birth;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setBirth(DateTime birth) {
-        this.birth = birth;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
