@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table
@@ -15,15 +16,18 @@ public class Author implements Serializable {
     private long id;
     private String firstName;
     private String lastName;
+    @OneToMany(cascade= CascadeType.ALL, mappedBy = "book")
+    private List<Book> books;
 
     public Author() {
 
     }
 
-    public Author(long id, String firstName, String lastName) {
+    public Author(long id, String firstName, String lastName, List<Book> books) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.books = books;
     }
 
     public long getId() {
@@ -48,5 +52,13 @@ public class Author implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

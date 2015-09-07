@@ -13,7 +13,9 @@ public class Borrow implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="borrow_id")
     private long id;
+    @ManyToOne
     private User reader;
+    @ManyToOne
     private Book book;
     private Date borrowDate;
     private Date expectedReturnDate;
