@@ -1,5 +1,7 @@
 import dtos.*;
-import org.joda.time.DateTime;
+import dtos.input.AuthorInputDTO;
+import dtos.input.BookInputDTO;
+import dtos.input.UserInputDTO;
 
 import java.util.List;
 
@@ -9,16 +11,16 @@ public interface ServiceFacade {
     List<BookDTO> findBooks(String isbn);
     List<BookDTO> findBooksByAuthor(long authorId);
     List<BookDTO> findBooksByTitle(String title);
-    BookDTO addBook(String isbn, String title, long authorId, DateTime issueDate);
-    boolean updateBook(long id, String isbn, String title, long authorId, DateTime issueDate);
-    ReaderDTO findReader(long id);
-    ReaderDTO findReaderByName(String name);
-    ReaderDTO registerReader(String email, String firstName, String lastName, DateTime birth);
-    boolean updateReader(long id, String email, String firstName, String lastName, DateTime birth);
+    void addBook(BookInputDTO bookInputDTO);
+    boolean updateBookTitle(long id, String title);
+    UserDTO findUser(long id);
+    UserDTO findUserByEmail(String email);
+    void registerUser(UserInputDTO userInputDTO);
     List<AuthorDTO> getAuthors();
-    AuthorDTO findAuthorByName(String name);
-    AuthorDTO registerAuthor(String firstName, String lastName);
-    List<BorrowingDTO> listActiveBorrowings(long readerId);
-    boolean borrowBook(long readerId, long bookId);
-    boolean returnBook(long bookId);
+    AuthorDTO findAuthor(long id);
+    List<AuthorDTO> findAuthorByName(String name);
+    void registerAuthor(AuthorInputDTO authorInputDTO);
+    List<BorrowingDTO> listActiveBorrowings(long userId);
+    boolean borrowBook(long userId, long bookId);
+    boolean returnBook(long userId, long bookId);
 }

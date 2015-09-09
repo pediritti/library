@@ -20,14 +20,6 @@ public class Book {
     public Book() {
     }
 
-    public Book(long id, Author author, String isbn, String title, Date issueDate) {
-        this.id = id;
-        this.author = author;
-        this.isbn = isbn;
-        this.title = title;
-        this.issueDate = issueDate;
-    }
-
     public long getId() {
         return id;
     }

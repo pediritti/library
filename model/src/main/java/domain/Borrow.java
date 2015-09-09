@@ -14,7 +14,7 @@ public class Borrow implements Serializable {
     @Column(name="borrow_id")
     private long id;
     @ManyToOne
-    private User reader;
+    private User user;
     @ManyToOne
     private Book book;
     private Date borrowDate;
@@ -24,9 +24,9 @@ public class Borrow implements Serializable {
 
     }
 
-    public Borrow(long id, User reader, Book book, Date borrowDate, Date expectedReturnDate) {
+    public Borrow(long id, User user, Book book, Date borrowDate, Date expectedReturnDate) {
         this.id = id;
-        this.reader = reader;
+        this.user = user;
         this.book = book;
         this.borrowDate = borrowDate;
         this.expectedReturnDate = expectedReturnDate;
@@ -40,12 +40,12 @@ public class Borrow implements Serializable {
         this.id = id;
     }
 
-    public User getReader() {
-        return reader;
+    public User getUser() {
+        return user;
     }
 
-    public void setReader(User reader) {
-        this.reader = reader;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Book getBook() {

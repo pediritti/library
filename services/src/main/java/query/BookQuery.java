@@ -10,12 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class GetBookByIdQuery {
+public class BookQuery {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
-    public Book execute(long id) {
-        return entityManager.find(Book.class, 1);
+    public Book find(long id) {
+        return entityManager.find(Book.class, id);
     }
 }
