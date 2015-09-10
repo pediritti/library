@@ -1,6 +1,7 @@
 package query;
 
 
+import domain.Author;
 import domain.Book;
 import org.springframework.stereotype.Component;
 
@@ -10,21 +11,17 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Component
-public class BooksByAuthorQuery {
+public class BooksByAuthorQuery extends AbstractParamQuery<Book, Author> implements ResultListQuery<Book, Author> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-    private Query findByAuthor;
+    private static final String FIELD_NAME = "author";
 
     public BooksByAuthorQuery() {
-        findByAuthor = entityManager.createQuery(
-                "TBD"
-        );
+        init(Book.class, Author.class, FIELD_NAME);
     }
 
-    public List<Book> execute(long authorId) {
-        findByAuthor.setParameter("authorId", authorId);
-        List<Book> books = findByAuthor.getResultList();
-        return books;
+    @Override
+    public List<Book> find(Author author) {
+        typedQuery.setParameter(parameter, author);
+        return typedQuery.getResultList();
     }
 }

@@ -1,30 +1,23 @@
 package query;
 
 
+import domain.Book;
 import domain.Borrowed;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.List;
 
 @Component
-public class BorrowingByBookQuery {
+public class BorrowingByBookQuery extends AbstractParamQuery<Borrowed, Book> implements SingleQuery<Borrowed, Book> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-    private Query findByBook;
+    private static final String FIELD_NAME = "book";
 
     public BorrowingByBookQuery() {
-        findByBook = entityManager.createQuery(
-                "TBD"
-        );
+        init(Borrowed.class, Book.class, FIELD_NAME);
     }
 
-    public Borrowed find(long bookId) {
-        findByBook.setParameter("bookId", bookId);
-        Borrowed borrowed = (Borrowed) findByBook.getSingleResult();
-        return borrowed;
+    @Override
+    public Borrowed find(Book book) {
+        typedQuery.setParameter(parameter, book);
+        return typedQuery.getSingleResult();
     }
 }

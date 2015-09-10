@@ -3,27 +3,21 @@ package query;
 import domain.Author;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
 
 @Component
-public class AuthorByNameQuery {
+public class AuthorByNameQuery extends AbstractParamQuery<Author, String> implements ResultListQuery<Author, String> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-    private Query findByName;
+    private static final String FIELD_NAME = "name";
 
     public AuthorByNameQuery() {
-        findByName = entityManager.createQuery(
-                "TBD"
-        );
+        init(Author.class, String.class, FIELD_NAME);
     }
 
+    @Override
     public List<Author> find(String name) {
-        findByName.setParameter("name", name);
-        List<Author> authors = findByName.getResultList();
-        return authors;
+        typedQuery.setParameter(parameter, name);
+        return typedQuery.getResultList();
     }
+
 }

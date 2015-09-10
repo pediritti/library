@@ -1,29 +1,23 @@
 package query;
 
 import domain.Borrowed;
+import domain.User;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
 
 @Component
-public class BorrowingsQuery {
+public class BorrowingsQuery extends AbstractParamQuery<Borrowed, User> implements ResultListQuery<Borrowed, User> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-    private Query findByUser;
+    private static final String FIELD_NAME = "user";
 
     public BorrowingsQuery() {
-        findByUser = entityManager.createQuery(
-                "TBD"
-        );
+        init(Borrowed.class, User.class, FIELD_NAME);
     }
 
-    public List<Borrowed> find(long userId) {
-        findByUser.setParameter("userId", userId);
-        List<Borrowed> borrowings = findByUser.getResultList();
-        return borrowings;
+    @Override
+    public List<Borrowed> find(User user) {
+        typedQuery.setParameter(parameter, user);
+        return typedQuery.getResultList();
     }
 }

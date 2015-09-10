@@ -1,27 +1,27 @@
 package query;
 
 
+import domain.Borrowed;
 import domain.Person;
+import domain.User;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-public class UserByEmailQuery {
+@Component
+public class UserByEmailQuery extends AbstractParamQuery<Person, String> implements SingleQuery<Person, String> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-    private Query findByEmail;
+    private static final String FIELD_NAME = "email";
 
     public UserByEmailQuery() {
-        findByEmail = entityManager.createQuery(
-                "select object(person) from person where person.email = :email"
-        );
+        init(Person.class, String.class, FIELD_NAME);
     }
 
+    @Override
     public Person find(String email) {
-        findByEmail.setParameter("email", email);
-        Person person = (Person)findByEmail.getSingleResult();
-        return person;
+        typedQuery.setParameter(parameter, email);
+        return typedQuery.getSingleResult();
     }
 }

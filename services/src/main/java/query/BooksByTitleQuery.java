@@ -9,21 +9,17 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Component
-public class BooksByTitleQuery {
+public class BooksByTitleQuery extends AbstractParamQuery<Book, String> implements ResultListQuery<Book, String> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-    private Query findByTitle;
+    private static final String FIELD_NAME = "title";
 
     public BooksByTitleQuery() {
-        findByTitle = entityManager.createQuery(
-                "TDB"
-        );
+        init(Book.class, String.class, FIELD_NAME);
     }
 
-    public List<Book> execute(String title) {
-        findByTitle.setParameter("title", title);
-        List<Book> books = findByTitle.getResultList();
-        return books;
+    @Override
+    public List<Book> find(String title) {
+        typedQuery.setParameter(parameter, title);
+        return typedQuery.getResultList();
     }
 }

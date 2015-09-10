@@ -65,19 +65,20 @@ public class ServiceFacadeImpl implements ServiceFacade {
 
     @Override
     public List<BookDTO> findBooks(String isbn) {
-        List<Book> books = booksByIsbnQuery.execute(isbn);
+        List<Book> books = booksByIsbnQuery.find(isbn);
         return bookToDtoMapper.map(books);
     }
 
     @Override
     public List<BookDTO> findBooksByAuthor(long authorId) {
-        List<Book> books = booksByAuthorQuery.execute(authorId);
+        Author author = authorQuery.find(authorId);
+        List<Book> books = booksByAuthorQuery.find(author);
         return bookToDtoMapper.map(books);
     }
 
     @Override
     public List<BookDTO> findBooksByTitle(String title) {
-        List<Book> books = booksByTitleQuery.execute(title);
+        List<Book> books = booksByTitleQuery.find(title);
         return bookToDtoMapper.map(books);
     }
 
@@ -141,7 +142,8 @@ public class ServiceFacadeImpl implements ServiceFacade {
 
     @Override
     public List<BorrowingDTO> listActiveBorrowings(long userId) {
-        List<Borrowed> borrowed = borrowingsQuery.find(userId);
+        User user = (User)userQuery.find(userId);
+        List<Borrowed> borrowed = borrowingsQuery.find(user);
         return borrowToDtoMapper.map(borrowed);
     }
 
@@ -149,15 +151,16 @@ public class ServiceFacadeImpl implements ServiceFacade {
     public boolean borrowBook(long userId, long bookId) {
         User user = (User)userQuery.find(userId);
         Book book = bookQuery.find(bookId);
-        Borrowed borrowed = BorrowFactory.create(user, book);
+        Borrowed borrowed = BorrowFactory.createBorrowed(user, book);
         borrowCommand.save(borrowed);
         return true;
     }
 
     @Override
     public boolean returnBook(long userId, long bookId) {
-        Borrowed borrowed = (Borrowed)borrowingByBookQuery.find(bookId);
-        Returned returned = BorrowFactory.create(borrowed);
+        Book book = bookQuery.find(bookId);
+        Borrowed borrowed = borrowingByBookQuery.find(book);
+        Returned returned = BorrowFactory.createReturned(borrowed);
         returnCommand.setReturned(borrowed, returned);
         return true;
     }

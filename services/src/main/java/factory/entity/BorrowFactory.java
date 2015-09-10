@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class BorrowFactory {
 
-    public static Borrowed create(User user, Book book) {
+    public static Borrowed createBorrowed(User user, Book book) {
         Borrowed borrowed = new Borrowed();
         borrowed.setUser(user);
         borrowed.setBook(book);
@@ -17,7 +17,7 @@ public class BorrowFactory {
         return borrowed;
     }
 
-    public static Returned create(Borrowed borrowed) {
+    public static Returned createReturned(Borrowed borrowed) {
         Returned returned = new Returned();
         returned.setUser(borrowed.getUser());
         returned.setBook(borrowed.getBook());
