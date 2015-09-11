@@ -2,22 +2,26 @@ package mapper;
 
 import domain.Book;
 import dtos.BookDTO;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 
 @Component
-public class BookToDtoMapper implements ToDtoMapper<Book, BookDTO> {
+public class BookToDtoMapper extends ToDtoMapper<Book, BookDTO> {
 
     @Override
-    public BookDTO map(Book entity) {
-        return new BookDTO();
+    void setMapper() {
+        mapper = (Book book) -> {
+            BookDTO dto = new BookDTO();
+            dto.setId(book.getId());
+            dto.setAuthorId(book.getAuthor().getId());
+            dto.setAuthorName(getAuthorName(book));
+            dto.setIsbn(book.getIsbn());
+            dto.setTitle(book.getTitle());
+            dto.setIssueDate(new DateTime(book.getIssueDate()));
+            return dto;
+        };
     }
 
-    @Override
-    public List<BookDTO> map(List<Book> entities) {
-        return null;
-    }
 
 }

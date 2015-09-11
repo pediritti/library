@@ -7,18 +7,19 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-// TODO: Implement mapping
 @Component
-public class AuthorToDtoMapper implements ToDtoMapper<Author, AuthorDTO> {
+public class AuthorToDtoMapper extends ToDtoMapper<Author, AuthorDTO> {
 
     @Override
-    public AuthorDTO map(Author entity) {
-        return new AuthorDTO();
-    }
-
-    @Override
-    public List<AuthorDTO> map(List<Author> entities) {
-        return new ArrayList<AuthorDTO>();
+    void setMapper() {
+        mapper = (Author author) -> {
+            AuthorDTO dto = new AuthorDTO();
+            dto.setId(author.getId());
+            dto.setFirstName(author.getFirstName());
+            dto.setLastName(author.getLastName());
+            return dto;
+        };
     }
 }

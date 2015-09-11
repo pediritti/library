@@ -1,21 +1,31 @@
 package mapper;
 
+import domain.Author;
+import domain.Book;
+import domain.Borrow;
 import domain.Borrowed;
 import dtos.BorrowingDTO;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
-public class BorrowToDtoMapper implements ToDtoMapper<Borrowed, BorrowingDTO> {
+public class BorrowToDtoMapper extends ToDtoMapper<Borrowed, BorrowingDTO> {
 
     @Override
-    public BorrowingDTO map(Borrowed entity) {
-        return null;
+    void setMapper() {
+        mapper = (Borrowed borrowed) -> {
+            BorrowingDTO dto = new BorrowingDTO();
+            dto.setBookId(borrowed.getBook().getId());
+            dto.setUserId(borrowed.getUser().getId());
+            dto.setTitle(borrowed.getBook().getTitle());
+            dto.setAuthor(getAuthorName(borrowed.getBook()));
+            dto.setBorrowDate(new DateTime(borrowed.getBorrowDate()));
+            dto.setExpectedReturnDate(new DateTime(borrowed.getExpectedReturnDate()));
+            return dto;
+        };
+
     }
 
-    @Override
-    public List<BorrowingDTO> map(List<Borrowed> entities) {
-        return null;
-    }
+
+
 }
