@@ -1,9 +1,10 @@
 package mapper;
 
 
+import business.book.BookToDtoMapper;
 import domain.Author;
 import domain.Book;
-import dtos.BookDTO;
+import dtos.result.BookDTO;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;

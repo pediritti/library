@@ -1,8 +1,9 @@
 package mapper;
 
 
+import business.user.UserToDtoMapper;
 import domain.User;
-import dtos.UserDTO;
+import dtos.result.UserDTO;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;

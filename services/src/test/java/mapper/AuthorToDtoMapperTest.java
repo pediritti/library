@@ -1,13 +1,13 @@
 package mapper;
 
 
+import business.author.AuthorToDtoMapper;
 import domain.Author;
-import dtos.AuthorDTO;
+import dtos.result.AuthorDTO;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 public class AuthorToDtoMapperTest {

@@ -1,10 +1,11 @@
 package mapper;
 
+import business.borrow.BorrowToDtoMapper;
 import domain.Author;
 import domain.Book;
 import domain.Borrowed;
 import domain.User;
-import dtos.BorrowingDTO;
+import dtos.result.BorrowingDTO;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
