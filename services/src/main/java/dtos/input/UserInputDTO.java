@@ -1,10 +1,10 @@
 package dtos.input;
 
 
-import dtos.DTO;
+import dtos.ServiceDTO;
 import org.joda.time.DateTime;
 
-public class UserInputDTO implements DTO {
+public class UserInputDTO implements ServiceDTO {
 
     private String firstName;
     private String lastName;

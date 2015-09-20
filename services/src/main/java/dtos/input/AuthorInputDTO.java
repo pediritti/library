@@ -1,9 +1,9 @@
 package dtos.input;
 
 
-import dtos.DTO;
+import dtos.ServiceDTO;
 
-public class AuthorInputDTO implements DTO {
+public class AuthorInputDTO implements ServiceDTO {
 
     private String firstName;
     private String lastName;
