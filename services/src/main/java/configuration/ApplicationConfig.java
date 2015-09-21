@@ -17,7 +17,6 @@ import java.util.Properties;
 @Configuration
 @EnableJpaRepositories
 @EnableTransactionManagement
-@ComponentScan
 public class ApplicationConfig {
 
     @Bean
