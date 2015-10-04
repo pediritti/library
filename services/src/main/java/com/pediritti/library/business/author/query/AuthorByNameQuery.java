@@ -1,23 +1,34 @@
 package com.pediritti.library.business.author.query;
 
-import com.pediritti.library.business.AbstractParamQuery;
 import com.pediritti.library.domain.Author;
-import com.pediritti.library.business.ResultListQuery;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class AuthorByNameQuery extends AbstractParamQuery<Author, String> implements ResultListQuery<Author, String> {
+public class AuthorByNameQuery {
 
     private static final String FIELD_NAME = "name";
 
-    public AuthorByNameQuery() {
-        init(Author.class, String.class, FIELD_NAME);
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    @Override
     public List<Author> find(String name) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        ParameterExpression<String> parameter = criteriaBuilder.parameter(String.class);
+
+        CriteriaQuery<Author> query = criteriaBuilder.createQuery(Author.class);
+        Root<Author> table = query.from(Author.class);
+        query.select(table).where(criteriaBuilder.equal(table.get(FIELD_NAME), parameter));
+
+        TypedQuery<Author> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(parameter, name);
         return typedQuery.getResultList();
     }

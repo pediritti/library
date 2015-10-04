@@ -40,8 +40,13 @@ public class UserService {
 
     @Transactional
     public UserDTO findUserByEmail(String email) {
-        Person person = userByEmailQuery.find(email);
-        return userToDtoMapper.map(person);
+        Optional<Person> personOptional = userByEmailQuery.find(email);
+        if(personOptional.isPresent()) {
+            Person person = personOptional.get();
+            return userToDtoMapper.map(person);
+        } else {
+            throw new NoSuchElementException("Person not found for email: " + email);
+        }
     }
 
     @Transactional

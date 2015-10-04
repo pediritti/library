@@ -31,6 +31,7 @@ public class AuthorService {
     @Autowired
     private AuthorToDtoMapper authorToDtoMapper;
 
+    @Transactional
     public List<AuthorDTO> getAuthors() {
         List<Author> authors = authorsAllQuery.findAll();
         return authorToDtoMapper.map(authors);

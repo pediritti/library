@@ -54,9 +54,15 @@ public class BorrowingService {
     @Transactional
     public void returnBook(long userId, long bookId) {
         Book book = getBook(bookId);
-        Borrowed borrowed = borrowingByBookQuery.find(book);
-        Returned returned = BorrowFactory.createReturned(borrowed);
-        returnCommand.setReturned(borrowed, returned);
+
+        Optional<Borrowed> borrowedOptional = borrowingByBookQuery.find(book);
+        if(borrowedOptional.isPresent()) {
+            Borrowed borrowed = borrowedOptional.get();
+            Returned returned = BorrowFactory.createReturned(borrowed);
+            returnCommand.setReturned(borrowed, returned);
+        } else {
+            throw new NoSuchElementException("Borrowed not found for book: " + bookId);
+        }
     }
 
     private Book getBook(long bookId) {
@@ -76,4 +82,5 @@ public class BorrowingService {
             throw new NoSuchElementException("User not found with id: " + userId);
         }
     }
+
 }

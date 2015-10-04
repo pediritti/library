@@ -1,24 +1,42 @@
 package com.pediritti.library.business.user.query;
 
 
-import com.pediritti.library.business.AbstractParamQuery;
-import com.pediritti.library.business.SingleQuery;
 import com.pediritti.library.domain.Person;
 
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+import java.util.Optional;
+
 @Repository
-public class UserByEmailQuery extends AbstractParamQuery<Person, String> implements SingleQuery<Person, String> {
+public class UserByEmailQuery {
 
     private static final String FIELD_NAME = "email";
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    public UserByEmailQuery() {
-        init(Person.class, String.class, FIELD_NAME);
-    }
+    public Optional<Person> find(String email) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 
-    @Override
-    public Person find(String email) {
+        ParameterExpression<String> parameter = criteriaBuilder.parameter(String.class);
+
+        CriteriaQuery<Person> query = criteriaBuilder.createQuery(Person.class);
+        Root<Person> table = query.from(Person.class);
+        query.select(table).where(criteriaBuilder.equal(table.get(FIELD_NAME), parameter));
+
+        TypedQuery<Person> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(parameter, email);
-        return typedQuery.getSingleResult();
+
+        Person person;
+        try {
+            person = typedQuery.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+            return Optional.empty();
+        }
+        return Optional.of(person);
     }
 }

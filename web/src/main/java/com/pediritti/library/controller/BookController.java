@@ -16,6 +16,7 @@ import com.pediritti.library.service.BookService;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/book")
 public class BookController {
 
     @Autowired
@@ -37,12 +38,6 @@ public class BookController {
     public BookResponseDTO find( @RequestParam(value="id", defaultValue = "0") long id) {
         BookDTO bookDTO = bookService.findBook(id);
         return bookResponseConverter.convert(bookDTO);
-    }
-
-
-    @RequestMapping(method = RequestMethod.GET, value="/get")
-    public String get() {
-        return "result";
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/findIsbn")
@@ -67,4 +62,5 @@ public class BookController {
             bookService.updateBookTitle(book.getId(), request.getTitle());
         }
     }
+
  }

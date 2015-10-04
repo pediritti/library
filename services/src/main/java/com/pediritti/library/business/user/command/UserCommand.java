@@ -15,6 +15,11 @@ public class UserCommand {
     private EntityManager entityManager;
 
     public Optional<Person> find(long id) {
-        return Optional.of(entityManager.find(Person.class, id));
+        Person person = entityManager.find(Person.class, id);
+        if(person != null) {
+            return Optional.of(person);
+        } else {
+            return Optional.empty();
+        }
     }
 }

@@ -14,6 +14,11 @@ public class BookCommand {
     private EntityManager entityManager;
 
     public Optional<Book> find(long id) {
-        return Optional.of(entityManager.find(Book.class, id));
+        final Book book = entityManager.find(Book.class, id);
+        if(book != null) {
+            return Optional.of(book);
+        } else {
+            return Optional.empty();
+        }
     }
 }

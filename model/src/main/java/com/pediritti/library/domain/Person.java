@@ -7,10 +7,12 @@ import java.util.Date;
 
 @Entity
 @Table
+@SequenceGenerator(name="seq", initialValue=1, allocationSize=1, sequenceName="person_seq")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Person implements Serializable {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq")
     @Column(name="user_id")
     private long id;
     private String firstName;

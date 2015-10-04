@@ -7,11 +7,11 @@ import java.util.Date;
 @Entity
 @Table
 @Inheritance(strategy = InheritanceType.JOINED)
+@SequenceGenerator(name="seq", initialValue=1, allocationSize=1, sequenceName="borrow_seq")
 public class Borrow implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="borrow_id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq")
     private long id;
     @ManyToOne
     private User user;

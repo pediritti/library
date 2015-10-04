@@ -15,7 +15,12 @@ public class AuthorCommand {
     private EntityManager entityManager;
 
     public Optional<Author> find(long id) {
-        return Optional.of(entityManager.find(Author.class, id));
+        Author author = entityManager.find(Author.class, id);
+        if(author != null) {
+            return Optional.of(author);
+        } else {
+            return Optional.empty();
+        }
     }
 
 }

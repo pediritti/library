@@ -5,10 +5,11 @@ import java.util.Date;
 
 @Entity
 @Table
+@SequenceGenerator(name="seq", initialValue=1, allocationSize=1, sequenceName="book_seq")
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq")
     @Column(name="book_id")
     private long id;
     @ManyToOne

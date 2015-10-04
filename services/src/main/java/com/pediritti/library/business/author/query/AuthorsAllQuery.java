@@ -13,14 +13,10 @@ public class AuthorsAllQuery {
 
     @PersistenceContext
     private EntityManager entityManager;
-    private Query findAllQuery;
-
-    public AuthorsAllQuery() {
-        findAllQuery = entityManager.createQuery("select a from author a");
-    }
 
     public List<Author> findAll() {
-        final List<Author> resultList = findAllQuery.getResultList();
+        Query query = entityManager.createQuery("select a from author a");
+        final List<Author> resultList = query.getResultList();
         return resultList;
     }
 }
