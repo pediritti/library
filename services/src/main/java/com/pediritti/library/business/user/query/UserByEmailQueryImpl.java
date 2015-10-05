@@ -3,6 +3,7 @@ package com.pediritti.library.business.user.query;
 
 import com.pediritti.library.domain.Person;
 
+import com.pediritti.library.domain.Person_;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,6 @@ import java.util.Optional;
 @Repository
 public class UserByEmailQueryImpl implements UserByEmailQuery {
 
-    private static final String FIELD_NAME = "email";
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -30,7 +30,7 @@ public class UserByEmailQueryImpl implements UserByEmailQuery {
 
         CriteriaQuery<Person> query = criteriaBuilder.createQuery(Person.class);
         Root<Person> table = query.from(Person.class);
-        query.select(table).where(criteriaBuilder.equal(table.get(FIELD_NAME), parameter));
+        query.select(table).where(criteriaBuilder.equal(table.get(Person_.email), parameter));
 
         TypedQuery<Person> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(parameter, email);

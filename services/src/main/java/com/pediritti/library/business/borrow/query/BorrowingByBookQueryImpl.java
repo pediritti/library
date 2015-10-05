@@ -2,6 +2,7 @@ package com.pediritti.library.business.borrow.query;
 
 import com.pediritti.library.domain.Book;
 import com.pediritti.library.domain.Borrowed;
+import com.pediritti.library.domain.Borrowed_;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +17,6 @@ import java.util.Optional;
 @Repository
 public class BorrowingByBookQueryImpl implements BorrowingByBookQuery {
 
-    private static final String FIELD_NAME = "book";
-
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -30,7 +29,7 @@ public class BorrowingByBookQueryImpl implements BorrowingByBookQuery {
 
         CriteriaQuery<Borrowed> query = criteriaBuilder.createQuery(Borrowed.class);
         Root<Borrowed> table = query.from(Borrowed.class);
-        query.select(table).where(criteriaBuilder.equal(table.get(FIELD_NAME), parameter));
+        query.select(table).where(criteriaBuilder.equal(table.get(Borrowed_.book), parameter));
 
         TypedQuery<Borrowed> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(parameter, book);

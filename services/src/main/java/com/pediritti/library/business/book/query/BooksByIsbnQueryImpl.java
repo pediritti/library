@@ -1,6 +1,7 @@
 package com.pediritti.library.business.book.query;
 
 import com.pediritti.library.domain.Book;
+import com.pediritti.library.domain.Book_;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +18,6 @@ import java.util.List;
 @Repository
 public class BooksByIsbnQueryImpl implements BooksByIsbnQuery {
 
-    private static final String FIELD_NAME = "isbn";
-
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -31,7 +30,7 @@ public class BooksByIsbnQueryImpl implements BooksByIsbnQuery {
 
         CriteriaQuery<Book> query = criteriaBuilder.createQuery(Book.class);
         Root<Book> table = query.from(Book.class);
-        query.select(table).where(criteriaBuilder.equal(table.get(FIELD_NAME), parameter));
+        query.select(table).where(criteriaBuilder.equal(table.get(Book_.isbn), parameter));
 
         TypedQuery<Book> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(parameter, isbn);

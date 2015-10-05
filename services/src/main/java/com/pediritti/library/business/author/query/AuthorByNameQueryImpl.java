@@ -1,6 +1,7 @@
 package com.pediritti.library.business.author.query;
 
 import com.pediritti.library.domain.Author;
+import com.pediritti.library.domain.Author_;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,16 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class AuthorByNameQueryImpl implements AuthorByNameQuery {
-
-    private static final String FIELD_NAME = "name";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -30,7 +27,13 @@ public class AuthorByNameQueryImpl implements AuthorByNameQuery {
 
         CriteriaQuery<Author> query = criteriaBuilder.createQuery(Author.class);
         Root<Author> table = query.from(Author.class);
-        query.select(table).where(criteriaBuilder.equal(table.get(FIELD_NAME), parameter));
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        predicates.add(criteriaBuilder.equal(table.get(Author_.firstName), parameter));
+        predicates.add(criteriaBuilder.equal(table.get(Author_.lastName), parameter));
+
+        query.select(table);
+        query.where(predicates.toArray(new Predicate[]{}));
 
         TypedQuery<Author> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(parameter, name);
