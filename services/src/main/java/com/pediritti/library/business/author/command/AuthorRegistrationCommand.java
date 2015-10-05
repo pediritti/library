@@ -1,19 +1,10 @@
 package com.pediritti.library.business.author.command;
 
 
-import com.pediritti.library.domain.Author;;
-import org.springframework.stereotype.Repository;
+import com.pediritti.library.domain.Author;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
-@Repository
-public class AuthorRegistrationCommand {
+public interface AuthorRegistrationCommand {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public void create(Author author) {
-        entityManager.persist(author);
-    }
+    void create(Author author);
 }

@@ -1,7 +1,7 @@
 package com.pediritti.library.service;
 
+import com.pediritti.library.business.ToDtoMapper;
 import com.pediritti.library.business.author.AuthorFactory;
-import com.pediritti.library.business.author.AuthorToDtoMapper;
 import com.pediritti.library.business.author.command.AuthorCommand;
 import com.pediritti.library.business.author.command.AuthorRegistrationCommand;
 import com.pediritti.library.business.author.query.AuthorByNameQuery;
@@ -29,7 +29,7 @@ public class AuthorService {
     @Autowired
     private AuthorsAllQuery authorsAllQuery;
     @Autowired
-    private AuthorToDtoMapper authorToDtoMapper;
+    private ToDtoMapper<Author, AuthorDTO> authorToDtoMapper;
 
     @Transactional
     public List<AuthorDTO> getAuthors() {

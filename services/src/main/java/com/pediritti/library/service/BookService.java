@@ -1,8 +1,8 @@
 package com.pediritti.library.service;
 
+import com.pediritti.library.business.ToDtoMapper;
 import com.pediritti.library.business.author.command.AuthorCommand;
 import com.pediritti.library.business.book.BookFactory;
-import com.pediritti.library.business.book.BookToDtoMapper;
 import com.pediritti.library.business.book.command.BookCommand;
 import com.pediritti.library.business.book.command.BookRegistrationCommand;
 import com.pediritti.library.business.book.query.BooksByAuthorQuery;
@@ -36,7 +36,7 @@ public class BookService {
     @Autowired
     private BooksByTitleQuery booksByTitleQuery;
     @Autowired
-    private BookToDtoMapper bookToDtoMapper;
+    private ToDtoMapper<Book, BookDTO> bookToDtoMapper;
 
     @Transactional
     public BookDTO findBook(long id) {

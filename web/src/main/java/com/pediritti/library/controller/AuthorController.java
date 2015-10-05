@@ -1,11 +1,14 @@
 package com.pediritti.library.controller;
 
 
-import com.pediritti.library.business.author.command.AuthorCommand;
-import com.pediritti.library.business.author.command.AuthorRegistrationCommand;
-import com.pediritti.library.business.author.query.AuthorsAllQuery;
+import com.pediritti.library.business.author.command.AuthorCommandImpl;
+import com.pediritti.library.business.author.command.AuthorRegistrationCommandImpl;
+import com.pediritti.library.business.author.query.AuthorsAllQueryImpl;
 import com.pediritti.library.domain.Author;
 import com.pediritti.library.domain.Book;
+import com.pediritti.library.dtos.input.AuthorInputDTO;
+import com.pediritti.library.dtos.result.AuthorDTO;
+import com.pediritti.library.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,33 +23,25 @@ import java.util.Optional;
 public class AuthorController {
 
     @Autowired
-    private AuthorCommand authorCommand;
-    @Autowired
-    private AuthorRegistrationCommand authorRegistrationCommand;
-    @Autowired
-    private AuthorsAllQuery authorsAllQuery;
+    private AuthorService authorService;
 
 
     @RequestMapping(method = RequestMethod.GET, value="/register")
     public String registerAuthor() {
-        Author author = new Author("Edgar Allen", "Poe", Collections.<Book>emptyList());
-        authorRegistrationCommand.create(author);
-        return author.getLastName();
+        AuthorInputDTO dto = new AuthorInputDTO("Edgar Allen", "Poe");
+        authorService.registerAuthor(dto);
+        return dto.getLastName();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/find")
     public String findAuthor() {
-        Optional<Author> authorOptional = authorCommand.find(1L);
-        if(authorOptional.isPresent()) {
-            return authorOptional.get().getFirstName();
-        } else {
-            return "not found";
-        }
+        AuthorDTO author = authorService.findAuthor(18L);
+        return author.getLastName();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/findAll")
     public String findAll() {
-        List<Author> authors = authorsAllQuery.findAll();
+        List<AuthorDTO> authors = authorService.getAuthors();
         return Integer.toString(authors.size());
     }
 }

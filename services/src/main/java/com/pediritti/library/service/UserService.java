@@ -1,7 +1,7 @@
 package com.pediritti.library.service;
 
+import com.pediritti.library.business.ToDtoMapper;
 import com.pediritti.library.business.user.PersonFactory;
-import com.pediritti.library.business.user.UserToDtoMapper;
 import com.pediritti.library.business.user.command.UserCommand;
 import com.pediritti.library.business.user.command.UserRegistrationCommand;
 import com.pediritti.library.business.user.query.UserByEmailQuery;
@@ -25,7 +25,7 @@ public class UserService {
     @Autowired
     private UserByEmailQuery userByEmailQuery;
     @Autowired
-    private UserToDtoMapper userToDtoMapper;
+    private ToDtoMapper<Person, UserDTO> userToDtoMapper;
 
     @Transactional
     public UserDTO findUser(long id) {

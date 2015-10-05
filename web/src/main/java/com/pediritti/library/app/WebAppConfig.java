@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.pediritti.library")
+@ComponentScan(basePackages = {"com.pediritti.library"})
 public class WebAppConfig {
 
 }

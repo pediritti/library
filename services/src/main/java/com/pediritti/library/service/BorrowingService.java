@@ -1,8 +1,8 @@
 package com.pediritti.library.service;
 
+import com.pediritti.library.business.ToDtoMapper;
 import com.pediritti.library.business.book.command.BookCommand;
 import com.pediritti.library.business.borrow.BorrowFactory;
-import com.pediritti.library.business.borrow.BorrowToDtoMapper;
 import com.pediritti.library.business.borrow.command.BorrowCommand;
 import com.pediritti.library.business.borrow.command.ReturnCommand;
 import com.pediritti.library.business.borrow.query.BorrowingByBookQuery;
@@ -34,7 +34,7 @@ public class BorrowingService {
     @Autowired
     private BorrowingByBookQuery borrowingByBookQuery;
     @Autowired
-    private BorrowToDtoMapper borrowToDtoMapper;
+    private ToDtoMapper<Borrowed, BorrowingDTO> borrowToDtoMapper;
 
     @Transactional
     public List<BorrowingDTO> listActiveBorrowings(long userId) {

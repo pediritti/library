@@ -1,19 +1,10 @@
 package com.pediritti.library.business.book.command;
 
+
 import com.pediritti.library.domain.Book;
-import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+public interface BookRegistrationCommand {
 
-@Repository
-public class BookRegistrationCommand {
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public void create(Book book) {
-        entityManager.persist(book);
-    }
-
+    void create(Book book);
 }

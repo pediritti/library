@@ -47,21 +47,13 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(emf);
-
-        return transactionManager;
-    }
-
-    @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.hbm2ddl.auto", "none");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
         return properties;
     }
