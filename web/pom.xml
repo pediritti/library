@@ -30,6 +30,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
             <groupId>com.pediritti.library</groupId>
             <artifactId>services</artifactId>
             <version>1.0-SNAPSHOT</version>
