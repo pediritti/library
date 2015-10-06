@@ -2,7 +2,7 @@ package com.pediritti.library.dto.book.response;
 
 import org.joda.time.DateTime;
 
-public class BookResponseDTO {
+public class BookResponse {
 
     private long id;
     private String isbn;

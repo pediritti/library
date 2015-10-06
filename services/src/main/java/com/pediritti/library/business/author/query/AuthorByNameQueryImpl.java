@@ -10,11 +10,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class AuthorByNameQueryImpl implements AuthorByNameQuery {
+
+    private static final String WILDCARD = "%";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -26,17 +27,16 @@ public class AuthorByNameQueryImpl implements AuthorByNameQuery {
         ParameterExpression<String> parameter = criteriaBuilder.parameter(String.class);
 
         CriteriaQuery<Author> query = criteriaBuilder.createQuery(Author.class);
-        Root<Author> table = query.from(Author.class);
+        Root<Author> authorTable = query.from(Author.class);
 
-        List<Predicate> predicates = new ArrayList<Predicate>();
-        predicates.add(criteriaBuilder.equal(table.get(Author_.firstName), parameter));
-        predicates.add(criteriaBuilder.equal(table.get(Author_.lastName), parameter));
-
-        query.select(table);
-        query.where(predicates.toArray(new Predicate[]{}));
+        query.select(authorTable);
+        query.where(criteriaBuilder.or(
+                criteriaBuilder.like(authorTable.get(Author_.firstName), parameter),
+                criteriaBuilder.like(authorTable.get(Author_.lastName), parameter))
+        );
 
         TypedQuery<Author> typedQuery = entityManager.createQuery(query);
-        typedQuery.setParameter(parameter, name);
+        typedQuery.setParameter(parameter, WILDCARD + name + WILDCARD);
         return typedQuery.getResultList();
     }
 

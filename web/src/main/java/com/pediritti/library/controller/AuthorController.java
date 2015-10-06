@@ -1,22 +1,19 @@
 package com.pediritti.library.controller;
 
 
-import com.pediritti.library.business.author.command.AuthorCommandImpl;
-import com.pediritti.library.business.author.command.AuthorRegistrationCommandImpl;
-import com.pediritti.library.business.author.query.AuthorsAllQueryImpl;
-import com.pediritti.library.domain.Author;
-import com.pediritti.library.domain.Book;
+import com.pediritti.library.dto.author.request.AuthorIdRequest;
+import com.pediritti.library.dto.author.request.AuthorNameRequest;
+import com.pediritti.library.dto.author.request.NewAuthorRequest;
+import com.pediritti.library.dto.author.response.AuthorResponse;
 import com.pediritti.library.dtos.input.AuthorInputDTO;
 import com.pediritti.library.dtos.result.AuthorDTO;
 import com.pediritti.library.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/author")
@@ -24,24 +21,41 @@ public class AuthorController {
 
     @Autowired
     private AuthorService authorService;
+    @Autowired
+    private Converter<AuthorDTO, AuthorResponse> authorResponseConverter;
+    @Autowired
+    private Converter<NewAuthorRequest, AuthorInputDTO> newAuthorRequestConverter;
 
-
-    @RequestMapping(method = RequestMethod.GET, value="/register")
-    public String registerAuthor() {
-        AuthorInputDTO dto = new AuthorInputDTO("Edgar Allen", "Poe");
+    @RequestMapping(method = RequestMethod.POST, value="/register")
+    public void registerAuthor(@RequestBody NewAuthorRequest request) {
+        AuthorInputDTO dto = newAuthorRequestConverter.convert(request);
         authorService.registerAuthor(dto);
-        return dto.getLastName();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/find")
-    public String findAuthor() {
-        AuthorDTO author = authorService.findAuthor(18L);
-        return author.getLastName();
+    @RequestMapping(method = RequestMethod.POST, value = "/find")
+    public AuthorResponse findAuthor(@RequestBody AuthorIdRequest request) {
+        AuthorDTO author = authorService.findAuthor(request.getAuthorId());
+        return authorResponseConverter.convert(author);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/findByName")
+    public List<AuthorResponse> findAuthorByName(@RequestBody AuthorNameRequest request) {
+        List<AuthorDTO> authors = authorService.findAuthorByName(request.getAuthorName());
+        return convert(authors);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/findAll")
-    public String findAll() {
+    public List<AuthorResponse> findAll() {
         List<AuthorDTO> authors = authorService.getAuthors();
-        return Integer.toString(authors.size());
+        return convert(authors);
+    }
+
+    private List<AuthorResponse> convert(List<AuthorDTO> authors) {
+        List<AuthorResponse> responseList = new ArrayList<>(authors.size());
+        for(AuthorDTO author: authors) {
+            AuthorResponse response = authorResponseConverter.convert(author);
+            responseList.add(response);
+        }
+        return responseList;
     }
 }
