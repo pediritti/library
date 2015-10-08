@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = IntegrationTestConfig.class)
@@ -48,28 +48,28 @@ public class BookServiceTest {
     public void testFindByAuthor() {
         List<BookDTO> books = bookService.findBooksByAuthor(frenzenId);
 
-        assertTrue(books.size() == 2);
+        assertEquals(2, books.size());
     }
 
     @Test(expected = NoSuchElementException.class)
     public void testNotFoundByAuthor() {
         List<BookDTO> books = bookService.findBooksByAuthor(0L);
 
-        assertTrue(books.size() == 2);
+        assertEquals(2, books.size());
     }
 
     @Test
     public void testFindByIsbn() {
         List<BookDTO> books = bookService.findBooks("0312421273");
 
-        assertTrue(books.size() == 1);
+        assertEquals(1, books.size());
     }
 
     @Test
     public void testFindByTitle() {
         List<BookDTO> books = bookService.findBooksByTitle("Freedom");
 
-        assertTrue(books.size() == 1);
+        assertEquals(1, books.size());
     }
 
     @Test
@@ -79,11 +79,7 @@ public class BookServiceTest {
         bookService.updateBookTitle(bookId, "corrected");
 
         List<BookDTO> updatedBooks = bookService.findBooksByTitle("corrected");
-        assertTrue(updatedBooks.size() == 1);
+        assertEquals(1, books.size());
     }
-
-
-
-
 
 }

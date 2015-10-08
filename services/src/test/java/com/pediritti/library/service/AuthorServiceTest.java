@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,8 +48,8 @@ public class AuthorServiceTest {
     public void testFindByName() {
         List<AuthorDTO> authors = authorService.findAuthorByName("Haruki");
 
-        assertTrue(authors.size() == 1);
-    }
+        assertEquals(1, authors.size());
+}
 
     @Test
     public void testFindById() {
@@ -58,8 +59,8 @@ public class AuthorServiceTest {
 
         AuthorDTO author = authorService.findAuthor(id);
 
-        assertTrue(murakami.getFirstName().equals(author.getFirstName()));
-        assertTrue(murakami.getLastName().equals(author.getLastName()));
+        assertEquals(murakami.getFirstName(), author.getFirstName());
+        assertEquals(murakami.getLastName(), author.getLastName());
     }
 
 
@@ -67,14 +68,14 @@ public class AuthorServiceTest {
     public void testFindByLastNamePart() {
         List<AuthorDTO> authors = authorService.findAuthorByName("Haru");
 
-        assertTrue(authors.size() == 1);
+        assertEquals(1, authors.size());
     }
 
     @Test
     public void testFindByFirstNamePart() {
         List<AuthorDTO> authors = authorService.findAuthorByName("uraka");
 
-        assertTrue(authors.size() == 1);
+        assertEquals(1, authors.size());
     }
 
 }
