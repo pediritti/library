@@ -1,6 +1,5 @@
-package com.pedriritti.library.borrow;
+package com.pediritti.library.business.borrow;
 
-import com.pediritti.library.business.borrow.BorrowToDtoMapper;
 import com.pediritti.library.domain.Author;
 import com.pediritti.library.domain.Book;
 import com.pediritti.library.domain.Borrowed;

@@ -1,7 +1,6 @@
-package com.pedriritti.library.user;
+package com.pediritti.library.business.user;
 
 
-import com.pediritti.library.business.user.UserToDtoMapper;
 import com.pediritti.library.domain.User;
 import com.pediritti.library.dtos.result.UserDTO;
 import org.joda.time.DateTime;

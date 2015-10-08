@@ -1,7 +1,6 @@
-package com.pedriritti.library.book;
+package com.pediritti.library.business.book;
 
 
-import com.pediritti.library.business.book.BookToDtoMapper;
 import com.pediritti.library.domain.Author;
 import com.pediritti.library.domain.Book;
 import com.pediritti.library.dtos.result.BookDTO;

@@ -1,7 +1,6 @@
-package com.pedriritti.library.author;
+package com.pediritti.library.business.author;
 
 
-import com.pediritti.library.business.author.AuthorToDtoMapper;
 import com.pediritti.library.domain.Author;
 import com.pediritti.library.dtos.result.AuthorDTO;
 
