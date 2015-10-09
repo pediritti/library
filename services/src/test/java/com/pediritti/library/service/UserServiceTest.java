@@ -16,6 +16,8 @@ import javax.transaction.Transactional;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = IntegrationTestConfig.class)
@@ -30,18 +32,27 @@ public class UserServiceTest {
     public void setup() {
         userInputDTO = new UserInputDTO("John", "Dow", "library", "john.dow@mail.com",
                 new DateTime(1968, 05, 30, 23, 59), false);
-        userService.registerUser(userInputDTO);
+    }
+
+    @Test
+    public void testRegisterUser() {
+        UserDTO result = userService.registerUser(userInputDTO);
+
+        assertEquals(userInputDTO.getFirstName(), result.getFirstName());
+        assertEquals(userInputDTO.getLastName(), result.getLastName());
+        assertEquals(userInputDTO.getPassword(), result.getPassword());
+        assertEquals(userInputDTO.getEmail(), result.getEmail());
+        assertEquals(userInputDTO.getBirth(), result.getBirth());
+        assertTrue(result.getId() > 0L);
     }
 
     @Test
     public void testFindByEmail() {
+        userService.registerUser(userInputDTO);
+
         UserDTO userDTO = userService.findUserByEmail("john.dow@mail.com");
 
-        assertEquals(userInputDTO.getFirstName(), userDTO.getFirstName());
-        assertEquals(userInputDTO.getLastName(), userDTO.getLastName());
-        assertEquals(userInputDTO.getPassword(), userDTO.getPassword());
-        assertEquals(userInputDTO.getEmail(), userDTO.getEmail());
-        assertEquals(userInputDTO.getBirth(), userDTO.getBirth());
+        assertNotNull(userDTO);
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -51,15 +62,15 @@ public class UserServiceTest {
 
     @Test
     public void testFindById() {
-        UserDTO johnDow = userService.findUserByEmail("john.dow@mail.com");
+        UserDTO registered = userService.registerUser(userInputDTO);
 
-        UserDTO userDTO = userService.findUser(johnDow.getId());
+        UserDTO result = userService.findUser(registered.getId());
 
-        assertEquals(userInputDTO.getFirstName(), userDTO.getFirstName());
-        assertEquals(userInputDTO.getLastName(), userDTO.getLastName());
-        assertEquals(userInputDTO.getPassword(), userDTO.getPassword());
-        assertEquals(userInputDTO.getEmail(), userDTO.getEmail());
-        assertEquals(userInputDTO.getBirth(), userDTO.getBirth());
+        assertEquals(userInputDTO.getFirstName(), result.getFirstName());
+        assertEquals(userInputDTO.getLastName(), result.getLastName());
+        assertEquals(userInputDTO.getPassword(), result.getPassword());
+        assertEquals(userInputDTO.getEmail(), result.getEmail());
+        assertEquals(userInputDTO.getBirth(), result.getBirth());
     }
 
     @Test(expected = NoSuchElementException.class)

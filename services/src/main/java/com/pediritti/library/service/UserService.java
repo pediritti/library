@@ -50,10 +50,12 @@ public class UserService {
     }
 
     @Transactional
-    public void registerUser(UserInputDTO inputDTO) {
+    public UserDTO registerUser(UserInputDTO inputDTO) {
         Person person = PersonFactory.createUser(inputDTO.getFirstName(), inputDTO.getLastName(),
                 inputDTO.getPassword(), inputDTO.getEmail(), inputDTO.getBirth(), inputDTO.isAdmin());
         userRegistrationCommand.create(person);
+        return userToDtoMapper.map(person);
+
     }
 
 }

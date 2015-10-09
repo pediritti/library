@@ -55,9 +55,10 @@ public class AuthorService {
     }
 
     @Transactional
-    public void registerAuthor(AuthorInputDTO inputDTO) {
+    public AuthorDTO registerAuthor(AuthorInputDTO inputDTO) {
         Author author = AuthorFactory.createNew(inputDTO.getFirstName(), inputDTO.getLastName());
         authorRegistrationCommand.create(author);
+        return authorToDtoMapper.map(author);
     }
 
 }

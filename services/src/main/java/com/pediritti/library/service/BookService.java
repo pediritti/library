@@ -69,10 +69,11 @@ public class BookService {
     }
 
     @Transactional
-    public void addBook(BookInputDTO bookDto) {
+    public BookDTO addBook(BookInputDTO bookDto) {
         Author author = getAuthor(bookDto.getAuthorId());
         Book book = BookFactory.createNew(author, bookDto.getIsbn(), bookDto.getTitle(), bookDto.getIssueDate());
         bookRegistrationCommand.create(book);
+        return bookToDtoMapper.map(book);
     }
 
     @Transactional

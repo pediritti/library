@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = IntegrationTestConfig.class)
@@ -30,23 +31,38 @@ public class BookServiceTest {
     @Autowired
     private AuthorService authorService;
 
-    private final AuthorInputDTO frenzen = new AuthorInputDTO("Jonathan", "Frenzen");
-    private long frenzenId;
+    private AuthorInputDTO frenzen;
+    private AuthorDTO frenzenDto;
+    private BookInputDTO theCorrections;
+    private BookInputDTO freedom;
 
     @Before
     public void setup() {
-        authorService.registerAuthor(frenzen);
-        List<AuthorDTO> authors = authorService.findAuthorByName("Frenzen");
-        frenzenId = authors.get(0).getId();
-        BookInputDTO theCorrections = new BookInputDTO(frenzenId, "0312421273", "The Corrections", new DateTime(2002, 9, 1, 8, 0));
-        BookInputDTO freedom = new BookInputDTO(frenzenId, "0312576463", "Freedom", new DateTime(2011, 9, 27, 8, 0));
-        bookService.addBook(theCorrections);
-        bookService.addBook(freedom);
+        frenzen = new AuthorInputDTO("Jonathan", "Frenzen");
+        frenzenDto = authorService.registerAuthor(frenzen);
+
+        theCorrections = new BookInputDTO(frenzenDto.getId(), "0312421273", "The Corrections", new DateTime(2002, 9, 1, 8, 0));
+        freedom = new BookInputDTO(frenzenDto.getId(), "0312576463", "Freedom", new DateTime(2011, 9, 27, 8, 0));
+    }
+
+    @Test
+    public void testBookRegistration() {
+        BookDTO result = bookService.addBook(theCorrections);
+
+        assertEquals(theCorrections.getAuthorId(), result.getAuthorId());
+        assertEquals(theCorrections.getIsbn(), result.getIsbn());
+        assertEquals(theCorrections.getTitle(), result.getTitle());
+        assertEquals(theCorrections.getIssueDate(), result.getIssueDate());
+        assertEquals(frenzen.getFirstName() + " " + frenzen.getLastName(), result.getAuthorName());
+        assertTrue(result.getId() > 0L);
     }
 
     @Test
     public void testFindByAuthor() {
-        List<BookDTO> books = bookService.findBooksByAuthor(frenzenId);
+        bookService.addBook(theCorrections);
+        bookService.addBook(freedom);
+
+        List<BookDTO> books = bookService.findBooksByAuthor(frenzenDto.getId());
 
         assertEquals(2, books.size());
     }
@@ -54,12 +70,12 @@ public class BookServiceTest {
     @Test(expected = NoSuchElementException.class)
     public void testNotFoundByAuthor() {
         List<BookDTO> books = bookService.findBooksByAuthor(0L);
-
-        assertEquals(2, books.size());
     }
 
     @Test
     public void testFindByIsbn() {
+        bookService.addBook(theCorrections);
+
         List<BookDTO> books = bookService.findBooks("0312421273");
 
         assertEquals(1, books.size());
@@ -67,6 +83,8 @@ public class BookServiceTest {
 
     @Test
     public void testFindByTitle() {
+        bookService.addBook(freedom);
+
         List<BookDTO> books = bookService.findBooksByTitle("Freedom");
 
         assertEquals(1, books.size());
@@ -74,12 +92,12 @@ public class BookServiceTest {
 
     @Test
     public void testUpdateTitle() {
-        List<BookDTO> books = bookService.findBooksByTitle("The Corrections");
-        long bookId = books.get(0).getId();
-        bookService.updateBookTitle(bookId, "corrected");
+        BookDTO bookDTO = bookService.addBook(theCorrections);
+
+        bookService.updateBookTitle(bookDTO.getId(), "corrected");
 
         List<BookDTO> updatedBooks = bookService.findBooksByTitle("corrected");
-        assertEquals(1, books.size());
+        assertEquals(1, updatedBooks.size());
     }
 
 }

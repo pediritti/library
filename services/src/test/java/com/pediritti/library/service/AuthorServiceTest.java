@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,10 +27,16 @@ public class AuthorServiceTest {
     private AuthorService authorService;
 
     private final AuthorInputDTO murakami = new AuthorInputDTO("Haruki", "Murakami");
+    private final AuthorInputDTO ishiguro = new AuthorInputDTO("Kazuo", "Ishiguro");
 
-    @Before
-    public void setup() {
-        authorService.registerAuthor(murakami);
+    @Test
+    public void testAuthorRegistration() {
+        AuthorDTO result = authorService.registerAuthor(murakami);
+
+        assertEquals(murakami.getFirstName(), result.getFirstName());
+        assertEquals(murakami.getLastName(), result.getLastName());
+        assertNotNull(result.getId());
+        assertTrue(result.getId() > 0L);
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -39,13 +46,18 @@ public class AuthorServiceTest {
 
     @Test
     public void testGetAuthors() {
+        authorService.registerAuthor(murakami);
+        authorService.registerAuthor(ishiguro);
+
         List<AuthorDTO> authors = authorService.getAuthors();
 
-        assertTrue(authors.size() > 0);
+        assertEquals(2, authors.size());
     }
 
     @Test
     public void testFindByName() {
+        authorService.registerAuthor(murakami);
+
         List<AuthorDTO> authors = authorService.findAuthorByName("Haruki");
 
         assertEquals(1, authors.size());
@@ -53,11 +65,9 @@ public class AuthorServiceTest {
 
     @Test
     public void testFindById() {
-        List<AuthorDTO> authors = authorService.findAuthorByName("Haruki");
+        AuthorDTO murakamiDto = authorService.registerAuthor(murakami);
 
-        long id = authors.get(0).getId();
-
-        AuthorDTO author = authorService.findAuthor(id);
+        AuthorDTO author = authorService.findAuthor(murakamiDto.getId());
 
         assertEquals(murakami.getFirstName(), author.getFirstName());
         assertEquals(murakami.getLastName(), author.getLastName());
@@ -66,6 +76,8 @@ public class AuthorServiceTest {
 
     @Test
     public void testFindByLastNamePart() {
+        authorService.registerAuthor(murakami);
+
         List<AuthorDTO> authors = authorService.findAuthorByName("Haru");
 
         assertEquals(1, authors.size());
@@ -73,6 +85,8 @@ public class AuthorServiceTest {
 
     @Test
     public void testFindByFirstNamePart() {
+        authorService.registerAuthor(murakami);
+
         List<AuthorDTO> authors = authorService.findAuthorByName("uraka");
 
         assertEquals(1, authors.size());
