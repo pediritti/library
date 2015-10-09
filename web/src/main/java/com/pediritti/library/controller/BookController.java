@@ -7,6 +7,7 @@ import com.pediritti.library.dto.book.response.BookResponse;
 import com.pediritti.library.dtos.input.BookInputDTO;
 import com.pediritti.library.dtos.result.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.web.bind.annotation.*;
 import com.pediritti.library.service.BookService;
 
@@ -22,9 +23,9 @@ public class BookController {
     @Autowired
     private BookService bookService;
     @Autowired
-    private AddBookDTOConverter addBookDTOConverter;
+    private Converter<AddBookRequestDTO, BookInputDTO> addBookDTOConverter;
     @Autowired
-    private BookResponseConverter bookResponseConverter;
+    private Converter<BookDTO,BookResponse> bookResponseConverter;
 
     @RequestMapping(method = RequestMethod.POST, value="/register")
     public BookResponse registerBook(@RequestBody AddBookRequestDTO request) {
