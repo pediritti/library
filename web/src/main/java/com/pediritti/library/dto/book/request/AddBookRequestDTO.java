@@ -1,14 +1,11 @@
 package com.pediritti.library.dto.book.request;
 
-
-import org.joda.time.DateTime;
-
 public class AddBookRequestDTO {
 
     private long authorId;
     private String isbn;
     private String title;
-    private DateTime issueDate;
+    private String issueDate;
 
     public long getAuthorId() {
         return authorId;
@@ -34,11 +31,11 @@ public class AddBookRequestDTO {
         this.title = title;
     }
 
-    public DateTime getIssueDate() {
+    public String getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(DateTime issueDate) {
+    public void setIssueDate(String issueDate) {
         this.issueDate = issueDate;
     }
 }

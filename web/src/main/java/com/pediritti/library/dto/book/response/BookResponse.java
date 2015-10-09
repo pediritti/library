@@ -7,7 +7,7 @@ public class BookResponse {
     private long id;
     private String isbn;
     private String title;
-    private DateTime issueDate;
+    private String issueDate;
     private long authorId;
     private String authorName;
 
@@ -35,11 +35,11 @@ public class BookResponse {
         this.title = title;
     }
 
-    public DateTime getIssueDate() {
+    public String getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(DateTime issueDate) {
+    public void setIssueDate(String issueDate) {
         this.issueDate = issueDate;
     }
 

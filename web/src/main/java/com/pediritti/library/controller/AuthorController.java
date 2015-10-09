@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(value = "/author")
@@ -27,14 +29,21 @@ public class AuthorController {
     private Converter<NewAuthorRequest, AuthorInputDTO> newAuthorRequestConverter;
 
     @RequestMapping(method = RequestMethod.POST, value="/register")
-    public void registerAuthor(@RequestBody NewAuthorRequest request) {
+    public AuthorResponse registerAuthor(@RequestBody NewAuthorRequest request) {
         AuthorInputDTO dto = newAuthorRequestConverter.convert(request);
-        authorService.registerAuthor(dto);
+        final AuthorDTO result = authorService.registerAuthor(dto);
+        return authorResponseConverter.convert(result);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/find")
-    public AuthorResponse findAuthor(@RequestBody AuthorIdRequest request) {
-        AuthorDTO author = authorService.findAuthor(request.getAuthorId());
+    public AuthorResponse findAuthor(@RequestBody AuthorIdRequest request, HttpServletResponse response) {
+        AuthorDTO author;
+        try {
+            author = authorService.findAuthor(request.getAuthorId());
+        } catch (NoSuchElementException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return null;
+        }
         return authorResponseConverter.convert(author);
     }
 

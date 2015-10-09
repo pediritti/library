@@ -6,13 +6,14 @@ import com.pediritti.library.dto.book.request.*;
 import com.pediritti.library.dto.book.response.BookResponse;
 import com.pediritti.library.dtos.input.BookInputDTO;
 import com.pediritti.library.dtos.result.BookDTO;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.pediritti.library.service.BookService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(value = "/book")
@@ -26,20 +27,21 @@ public class BookController {
     private BookResponseConverter bookResponseConverter;
 
     @RequestMapping(method = RequestMethod.POST, value="/register")
- //   public void registerBook(@RequestBody AddBookRequestDTO request) {
-        public void registerBook() {
-        AddBookRequestDTO request = new AddBookRequestDTO();
-        request.setAuthorId(21L);
-        request.setIsbn("0679735771");
-        request.setTitle("American Psycho");
-        request.setIssueDate(new DateTime());
+    public BookResponse registerBook(@RequestBody AddBookRequestDTO request) {
         BookInputDTO bookInputDTO = addBookDTOConverter.convert(request);
-        bookService.addBook(bookInputDTO);
+        BookDTO bookDTO = bookService.addBook(bookInputDTO);
+        return bookResponseConverter.convert(bookDTO);
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/find")
-    public BookResponse find( @RequestBody BookIdRequest request) {
-        BookDTO bookDTO = bookService.findBook(request.getBookId());
+    public BookResponse find( @RequestBody BookIdRequest request, HttpServletResponse response) {
+        BookDTO bookDTO;
+        try {
+            bookDTO = bookService.findBook(request.getBookId());
+        } catch (NoSuchElementException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return null;
+        }
         return bookResponseConverter.convert(bookDTO);
     }
 

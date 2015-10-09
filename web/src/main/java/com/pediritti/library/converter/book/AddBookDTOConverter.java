@@ -3,6 +3,7 @@ package com.pediritti.library.converter.book;
 
 import com.pediritti.library.dto.book.request.*;
 import com.pediritti.library.dtos.input.BookInputDTO;
+import org.joda.time.DateTime;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ public class AddBookDTOConverter implements Converter<AddBookRequestDTO, BookInp
                 request.getAuthorId(),
                 request.getIsbn(),
                 request.getTitle(),
-                request.getIssueDate()
+                new DateTime(request.getIssueDate())
         );
     }
 }
