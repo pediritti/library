@@ -16,7 +16,7 @@ public class UserRegistrationCommandImpl implements UserRegistrationCommand {
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public void create(Person user) {
-        entityManager.persist(user);
+    public void create(Person person) {
+        entityManager.persist(person);
     }
 }

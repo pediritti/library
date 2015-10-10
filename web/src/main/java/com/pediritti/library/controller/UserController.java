@@ -29,7 +29,7 @@ public class UserController {
     private Converter<UserDTO, UserResponse> userResponseConverter;
 
     @RequestMapping(method = RequestMethod.POST, value="/register")
-    public UserResponse registerBook(@RequestBody AddUserRequest request) {
+    public UserResponse registerUser(@RequestBody AddUserRequest request) {
         UserInputDTO userInputDTO = addUserRequestConverter.convert(request);
         UserDTO userDTO = userService.registerUser(userInputDTO);
         return userResponseConverter.convert(userDTO);
