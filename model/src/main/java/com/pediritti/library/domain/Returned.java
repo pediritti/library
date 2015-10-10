@@ -13,8 +13,8 @@ public class Returned extends Borrow {
     public Returned() {
     }
 
-    public Returned(long id, User reader, Book book, Date borrowDate, Date expectedReturnDate, Date returnDate) {
-        super(id, reader, book, borrowDate, expectedReturnDate);
+    public Returned(long id, Borrower borrower, Book book, Date borrowDate, Date expectedReturnDate, Date returnDate) {
+        super(id, borrower, book, borrowDate, expectedReturnDate);
         this.returnDate = returnDate;
     }
 

@@ -7,9 +7,9 @@ import java.util.Date;
 
 public class BorrowFactory {
 
-    public static Borrowed createBorrowed(User user, Book book) {
+    public static Borrowed createBorrowed(Borrower borrower, Book book) {
         Borrowed borrowed = new Borrowed();
-        borrowed.setUser(user);
+        borrowed.setBorrower(borrower);
         borrowed.setBook(book);
         borrowed.setBorrowDate(new Date());
         // TODO: implement logic to set expected return date.
@@ -19,7 +19,7 @@ public class BorrowFactory {
 
     public static Returned createReturned(Borrowed borrowed) {
         Returned returned = new Returned();
-        returned.setUser(borrowed.getUser());
+        returned.setBorrower(borrowed.getBorrower());
         returned.setBook(borrowed.getBook());
         returned.setBorrowDate(borrowed.getBorrowDate());
         returned.setExpectedReturnDate(borrowed.getExpectedReturnDate());

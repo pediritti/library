@@ -3,7 +3,7 @@ package com.pediritti.library.business.borrow;
 import com.pediritti.library.domain.Author;
 import com.pediritti.library.domain.Book;
 import com.pediritti.library.domain.Borrowed;
-import com.pediritti.library.domain.User;
+import com.pediritti.library.domain.Borrower;
 import com.pediritti.library.dtos.result.BorrowingDTO;
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -41,11 +41,11 @@ public class BorrowToDtoMapperTest {
         book.setTitle(title);
         book.setAuthor(author);
 
-        User user = new User();
-        user.setId(userId);
+        Borrower borrower = new Borrower();
+        borrower.setId(userId);
 
         Borrowed borrowed = new Borrowed();
-        borrowed.setUser(user);
+        borrowed.setBorrower(borrower);
         borrowed.setBook(book);
         borrowed.setBorrowDate(borrowDate);
         borrowed.setExpectedReturnDate(expectedReturnDate);

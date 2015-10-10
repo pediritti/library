@@ -2,7 +2,7 @@ package com.pediritti.library.business.borrow.query;
 
 import com.pediritti.library.domain.Borrowed;
 import com.pediritti.library.domain.Borrowed_;
-import com.pediritti.library.domain.User;
+import com.pediritti.library.domain.Borrower;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +24,14 @@ public class BorrowingQueryImpl implements BorrowingQuery {
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public List<Borrowed> find(User user) {
+    public List<Borrowed> find(Borrower user) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 
-        ParameterExpression<User> parameter = criteriaBuilder.parameter(User.class);
+        ParameterExpression<Borrower> parameter = criteriaBuilder.parameter(Borrower.class);
 
         CriteriaQuery<Borrowed> query = criteriaBuilder.createQuery(Borrowed.class);
         Root<Borrowed> table = query.from(Borrowed.class);
-        query.select(table).where(criteriaBuilder.equal(table.get(Borrowed_.user), parameter));
+        query.select(table).where(criteriaBuilder.equal(table.get(Borrowed_.borrower), parameter));
 
         TypedQuery<Borrowed> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(parameter, user);

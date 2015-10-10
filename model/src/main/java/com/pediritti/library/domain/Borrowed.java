@@ -11,7 +11,7 @@ public class Borrowed extends Borrow {
     public Borrowed() {
     }
 
-    public Borrowed(long id, User reader, Book book, Date borrowDate, Date expectedReturnDate) {
-        super(id, reader, book, borrowDate, expectedReturnDate);
+    public Borrowed(long id, Borrower borrower, Book book, Date borrowDate, Date expectedReturnDate) {
+        super(id, borrower, book, borrowDate, expectedReturnDate);
     }
 }

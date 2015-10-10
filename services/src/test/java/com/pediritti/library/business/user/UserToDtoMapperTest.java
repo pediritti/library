@@ -1,7 +1,7 @@
 package com.pediritti.library.business.user;
 
 
-import com.pediritti.library.domain.User;
+import com.pediritti.library.domain.Borrower;
 import com.pediritti.library.dtos.result.UserDTO;
 import org.joda.time.DateTime;
 import org.junit.Before;
@@ -29,7 +29,7 @@ public class UserToDtoMapperTest {
         String email = "john.dow@mail.com";
         Date birth = new Date();
 
-        User user = new User();
+        Borrower user = new Borrower();
         user.setId(id);
         user.setFirstName(firstName);
         user.setLastName(lastName);

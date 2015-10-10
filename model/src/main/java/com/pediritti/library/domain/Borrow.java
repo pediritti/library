@@ -14,7 +14,7 @@ public class Borrow implements Serializable {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq")
     private long id;
     @ManyToOne
-    private User user;
+    private Borrower borrower;
     @ManyToOne
     private Book book;
     private Date borrowDate;
@@ -24,9 +24,9 @@ public class Borrow implements Serializable {
 
     }
 
-    public Borrow(long id, User user, Book book, Date borrowDate, Date expectedReturnDate) {
+    public Borrow(long id, Borrower borrower, Book book, Date borrowDate, Date expectedReturnDate) {
         this.id = id;
-        this.user = user;
+        this.borrower = borrower;
         this.book = book;
         this.borrowDate = borrowDate;
         this.expectedReturnDate = expectedReturnDate;
@@ -40,12 +40,12 @@ public class Borrow implements Serializable {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Borrower getBorrower() {
+        return borrower;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setBorrower(Borrower borrower) {
+        this.borrower = borrower;
     }
 
     public Book getBook() {

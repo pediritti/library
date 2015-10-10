@@ -14,7 +14,7 @@ public class BorrowToDtoMapper extends ToDtoMapper<Borrowed, BorrowingDTO> {
         mapper = (Borrowed borrowed) -> {
             BorrowingDTO dto = new BorrowingDTO();
             dto.setBookId(borrowed.getBook().getId());
-            dto.setUserId(borrowed.getUser().getId());
+            dto.setUserId(borrowed.getBorrower().getId());
             dto.setTitle(borrowed.getBook().getTitle());
             dto.setAuthor(getAuthorName(borrowed.getBook()));
             dto.setBorrowDate(new DateTime(borrowed.getBorrowDate()));

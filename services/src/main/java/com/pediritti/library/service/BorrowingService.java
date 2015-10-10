@@ -38,14 +38,14 @@ public class BorrowingService {
 
     @Transactional
     public List<BorrowingDTO> listActiveBorrowings(long userId) {
-        User user = getUser(userId);
+        Borrower user = getUser(userId);
         List<Borrowed> borrowed = borrowingQuery.find(user);
         return borrowToDtoMapper.map(borrowed);
     }
 
     @Transactional
     public void borrowBook(long userId, long bookId) {
-        User user = getUser(userId);
+        Borrower user = getUser(userId);
         Book book = getBook(bookId);
         Borrowed borrowed = BorrowFactory.createBorrowed(user, book);
         borrowCommand.save(borrowed);
@@ -74,10 +74,10 @@ public class BorrowingService {
         }
     }
 
-    private User getUser(long userId) {
+    private Borrower getUser(long userId) {
         Optional<Person> personOptional = userCommand.find(userId);
         if(personOptional.isPresent()) {
-            return (User) personOptional.get();
+            return (Borrower) personOptional.get();
         } else {
             throw new NoSuchElementException("User not found with id: " + userId);
         }
