@@ -3,6 +3,8 @@ package com.pediritti.library.business.user.command;
 
 import com.pediritti.library.domain.Person;
 
-public interface UserRegistrationCommand {
-    void create(Person person);
+import java.util.Optional;
+
+public interface PersonCommand {
+    Optional<Person> find(long id);
 }

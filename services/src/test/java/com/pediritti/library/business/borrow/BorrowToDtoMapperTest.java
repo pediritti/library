@@ -52,7 +52,7 @@ public class BorrowToDtoMapperTest {
 
         BorrowingDTO result = underTest.map(borrowed);
 
-        assertEquals(userId, result.getUserId());
+        assertEquals(userId, result.getBorrowerId());
         assertEquals(bookId, result.getBookId());
         assertEquals(title, result.getTitle());
         assertEquals(authorFirstName + " " + authorLastName, result.getAuthor());

@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
-public class UserRegistrationCommandImpl implements UserRegistrationCommand {
+public class PersonRegistrationCommandImpl implements PersonRegistrationCommand {
 
     @PersistenceContext
     private EntityManager entityManager;

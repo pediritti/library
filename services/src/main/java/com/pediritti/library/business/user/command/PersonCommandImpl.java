@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Repository
-public class UserCommandImpl implements UserCommand {
+public class PersonCommandImpl implements PersonCommand {
 
     @PersistenceContext
     private EntityManager entityManager;

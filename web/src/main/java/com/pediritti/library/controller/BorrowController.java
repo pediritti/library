@@ -29,7 +29,7 @@ public class BorrowController {
     @RequestMapping(method = RequestMethod.POST, value="/borrowBook")
     public void borrow(@RequestBody BorrowRequest request, HttpServletResponse response) {
         try {
-            borrowingService.borrowBook(request.getUserId(), request.getBookId());
+            borrowingService.borrowBook(request.getBorrowerId(), request.getBookId());
         } catch (NoSuchElementException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -38,7 +38,7 @@ public class BorrowController {
     @RequestMapping(method = RequestMethod.POST, value="/returnBook")
     public void returnBook(@RequestBody BorrowRequest request, HttpServletResponse response) {
         try {
-            borrowingService.returnBook(request.getUserId(), request.getBookId());
+            borrowingService.returnBook(request.getBorrowerId(), request.getBookId());
         } catch (NoSuchElementException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -47,7 +47,7 @@ public class BorrowController {
     @RequestMapping(method = RequestMethod.POST, value="/list")
     public List<BorrowResponse> getBorrowings(@RequestBody BorrowerRequest request) {
         List<BorrowResponse> responseList = new ArrayList<>();
-        for(BorrowingDTO dto : borrowingService.listActiveBorrowings(request.getUserId())) {
+        for(BorrowingDTO dto : borrowingService.listActiveBorrowings(request.getBorrowerId())) {
             responseList.add(borrowResponseConverter.convert(dto));
         }
         return responseList;

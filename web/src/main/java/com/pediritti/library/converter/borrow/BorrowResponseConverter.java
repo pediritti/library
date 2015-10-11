@@ -20,7 +20,7 @@ public class BorrowResponseConverter implements Converter<BorrowingDTO, BorrowRe
         response.setBorrowDate(dto.getBorrowDate().toString(dateTimeFormatter));
         response.setExpectedReturnDate(dto.getExpectedReturnDate().toString(dateTimeFormatter));
         response.setTitle(dto.getTitle());
-        response.setUserId(dto.getUserId());
+        response.setBorrowerId(dto.getBorrowerId());
         return response;
     }
 }

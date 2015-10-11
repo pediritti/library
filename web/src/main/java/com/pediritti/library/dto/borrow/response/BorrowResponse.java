@@ -1,23 +1,21 @@
 package com.pediritti.library.dto.borrow.response;
 
 
-import org.joda.time.DateTime;
-
 public class BorrowResponse {
 
-    private long userId;
+    private long borrowerId;
     private long bookId;
     private String title;
     private String author;
     private String borrowDate;
     private String expectedReturnDate;
 
-    public long getUserId() {
-        return userId;
+    public long getBorrowerId() {
+        return borrowerId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setBorrowerId(long borrowerId) {
+        this.borrowerId = borrowerId;
     }
 
     public long getBookId() {

@@ -16,7 +16,7 @@ import javax.persistence.criteria.Root;
 import java.util.Optional;
 
 @Repository
-public class UserByEmailQueryImpl implements UserByEmailQuery {
+public class PersonByEmailQueryImpl implements PersonByEmailQuery {
 
     @PersistenceContext
     private EntityManager entityManager;

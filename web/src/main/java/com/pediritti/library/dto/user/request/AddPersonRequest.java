@@ -1,20 +1,13 @@
-package com.pediritti.library.dto.user.response;
+package com.pediritti.library.dto.user.request;
 
-public class UserResponse {
+public class AddPersonRequest {
 
-    private long id;
     private String firstName;
     private String lastName;
+    private String password;
     private String email;
     private String birth;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    private boolean isAdmin;
 
     public String getFirstName() {
         return firstName;
@@ -32,6 +25,14 @@ public class UserResponse {
         this.lastName = lastName;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -46,5 +47,13 @@ public class UserResponse {
 
     public void setBirth(String birth) {
         this.birth = birth;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

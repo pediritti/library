@@ -11,8 +11,8 @@ import java.util.Date;
 
 public class PersonFactory {
 
-    public static Person createUser(String firstName, String lastName, String password,
-                                    String email, DateTime birth, boolean isAdmin) {
+    public static Person createPerson(String firstName, String lastName, String password,
+                                      String email, DateTime birth, boolean isAdmin) {
         Person person = getPerson(isAdmin);
         person.setFirstName(firstName);
         person.setLastName(lastName);

@@ -1,8 +1,8 @@
 package com.pediritti.library.converter.user;
 
 
-import com.pediritti.library.dto.user.request.AddUserRequest;
-import com.pediritti.library.dtos.input.UserInputDTO;
+import com.pediritti.library.dto.user.request.AddPersonRequest;
+import com.pediritti.library.dtos.input.PersonInputDTO;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class AddUserRequestConverterTest {
+public class AddPersonRequestConverterTest {
 
     private static final boolean ADMIN = false;
     private static final String BIRTH = "1968-01-01";
@@ -19,16 +19,16 @@ public class AddUserRequestConverterTest {
     private static final String LAST = "last";
     private static final String PASSWORD = "s3cr3t";
 
-    private AddUserRequestConverter underTest;
+    private AddPersonRequestConverter underTest;
 
     @Before
     public void setup() {
-        underTest = new AddUserRequestConverter();
+        underTest = new AddPersonRequestConverter();
     }
 
     @Test
     public void testConversion() {
-        AddUserRequest testInput = new AddUserRequest();
+        AddPersonRequest testInput = new AddPersonRequest();
         testInput.setAdmin(ADMIN);
         testInput.setBirth(BIRTH);
         testInput.setEmail(EMAIL);
@@ -36,7 +36,7 @@ public class AddUserRequestConverterTest {
         testInput.setLastName(LAST);
         testInput.setPassword(PASSWORD);
 
-        UserInputDTO result = underTest.convert(testInput);
+        PersonInputDTO result = underTest.convert(testInput);
 
         assertEquals(new DateTime(BIRTH), result.getBirth());
         assertEquals(EMAIL, result.getEmail());

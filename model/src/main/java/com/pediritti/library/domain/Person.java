@@ -13,7 +13,7 @@ public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq")
-    @Column(name="user_id")
+    @Column(name="person_id")
     private long id;
     private String firstName;
     private String lastName;

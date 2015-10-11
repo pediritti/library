@@ -1,7 +1,7 @@
 package com.pediritti.library.dto.user.request;
 
 
-public class UserIdRequest {
+public class PersonIdRequest {
 
     private long id;
 

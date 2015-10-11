@@ -2,7 +2,7 @@ package com.pediritti.library.business.user;
 
 
 import com.pediritti.library.domain.Borrower;
-import com.pediritti.library.dtos.result.UserDTO;
+import com.pediritti.library.dtos.result.PersonDTO;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,13 +11,13 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-public class UserToDtoMapperTest {
+public class PersonToDtoMapperTest {
 
-    private UserToDtoMapper underTest;
+    private PersonToDtoMapper underTest;
 
     @Before
     public void setUp() {
-        underTest = new UserToDtoMapper();
+        underTest = new PersonToDtoMapper();
     }
 
     @Test
@@ -29,15 +29,15 @@ public class UserToDtoMapperTest {
         String email = "john.dow@mail.com";
         Date birth = new Date();
 
-        Borrower user = new Borrower();
-        user.setId(id);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setBirth(birth);
+        Borrower borrower = new Borrower();
+        borrower.setId(id);
+        borrower.setFirstName(firstName);
+        borrower.setLastName(lastName);
+        borrower.setPassword(password);
+        borrower.setEmail(email);
+        borrower.setBirth(birth);
 
-        UserDTO result = underTest.map(user);
+        PersonDTO result = underTest.map(borrower);
 
         assertEquals(id, result.getId());
         assertEquals(firstName, result.getFirstName());

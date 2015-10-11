@@ -2,18 +2,18 @@ package com.pediritti.library.business.user;
 
 
 import com.pediritti.library.domain.Person;
-import com.pediritti.library.dtos.result.UserDTO;
+import com.pediritti.library.dtos.result.PersonDTO;
 import com.pediritti.library.business.ToDtoMapper;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserToDtoMapper extends ToDtoMapper<Person, UserDTO> {
+public class PersonToDtoMapper extends ToDtoMapper<Person, PersonDTO> {
 
     @Override
     public void setMapper() {
         mapper = (Person person) -> {
-            UserDTO dto = new UserDTO();
+            PersonDTO dto = new PersonDTO();
             dto.setId(person.getId());
             dto.setFirstName(person.getFirstName());
             dto.setLastName(person.getLastName());

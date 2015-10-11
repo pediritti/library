@@ -4,19 +4,19 @@ import org.joda.time.DateTime;
 
 public class BorrowingDTO {
 
-    private long userId;
+    private long borrowerId;
     private long bookId;
     private String title;
     private String author;
     private DateTime borrowDate;
     private DateTime expectedReturnDate;
 
-    public long getUserId() {
-        return userId;
+    public long getBorrowerId() {
+        return borrowerId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setBorrowerId(long borrowerId) {
+        this.borrowerId = borrowerId;
     }
 
     public long getBookId() {

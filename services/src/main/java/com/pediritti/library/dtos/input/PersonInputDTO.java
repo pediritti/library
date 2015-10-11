@@ -4,7 +4,7 @@ package com.pediritti.library.dtos.input;
 import com.pediritti.library.dtos.ServiceDTO;
 import org.joda.time.DateTime;
 
-public class UserInputDTO implements ServiceDTO {
+public class PersonInputDTO implements ServiceDTO {
 
     private String firstName;
     private String lastName;
@@ -13,7 +13,7 @@ public class UserInputDTO implements ServiceDTO {
     private DateTime birth;
     private boolean isAdmin;
 
-    public UserInputDTO(String firstName, String lastName, String password, String email, DateTime birth, boolean isAdmin) {
+    public PersonInputDTO(String firstName, String lastName, String password, String email, DateTime birth, boolean isAdmin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;

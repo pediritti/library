@@ -7,7 +7,7 @@ import com.pediritti.library.business.borrow.command.BorrowCommand;
 import com.pediritti.library.business.borrow.command.ReturnCommand;
 import com.pediritti.library.business.borrow.query.BorrowingByBookQuery;
 import com.pediritti.library.business.borrow.query.BorrowingQuery;
-import com.pediritti.library.business.user.command.UserCommand;
+import com.pediritti.library.business.user.command.PersonCommand;
 import com.pediritti.library.domain.*;
 import com.pediritti.library.dtos.result.BorrowingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.Optional;
 public class BorrowingService {
 
     @Autowired
-    private UserCommand userCommand;
+    private PersonCommand personCommand;
     @Autowired
     private BookCommand bookCommand;
     @Autowired
@@ -37,22 +37,22 @@ public class BorrowingService {
     private ToDtoMapper<Borrowed, BorrowingDTO> borrowToDtoMapper;
 
     @Transactional
-    public List<BorrowingDTO> listActiveBorrowings(long userId) {
-        Borrower user = getUser(userId);
+    public List<BorrowingDTO> listActiveBorrowings(long personId) {
+        Borrower user = getBorrower(personId);
         List<Borrowed> borrowed = borrowingQuery.find(user);
         return borrowToDtoMapper.map(borrowed);
     }
 
     @Transactional
-    public void borrowBook(long userId, long bookId) {
-        Borrower user = getUser(userId);
+    public void borrowBook(long borrowerId, long bookId) {
+        Borrower borrower = getBorrower(borrowerId);
         Book book = getBook(bookId);
-        Borrowed borrowed = BorrowFactory.createBorrowed(user, book);
+        Borrowed borrowed = BorrowFactory.createBorrowed(borrower, book);
         borrowCommand.save(borrowed);
     }
 
     @Transactional
-    public void returnBook(long userId, long bookId) {
+    public void returnBook(long borrowerId, long bookId) {
         Book book = getBook(bookId);
 
         Optional<Borrowed> borrowedOptional = borrowingByBookQuery.find(book);
@@ -74,12 +74,12 @@ public class BorrowingService {
         }
     }
 
-    private Borrower getUser(long userId) {
-        Optional<Person> personOptional = userCommand.find(userId);
+    private Borrower getBorrower(long personId) {
+        Optional<Person> personOptional = personCommand.find(personId);
         if(personOptional.isPresent()) {
             return (Borrower) personOptional.get();
         } else {
-            throw new NoSuchElementException("User not found with id: " + userId);
+            throw new NoSuchElementException("Person not found with id: " + personId);
         }
     }
 

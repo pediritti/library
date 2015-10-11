@@ -36,7 +36,7 @@ public class BorrowResponseConverterTest {
         testInput.setBorrowDate(BORROW_DATE);
         testInput.setExpectedReturnDate(EXP_RETURN_DATE);
         testInput.setTitle(TITLE);
-        testInput.setUserId(USER_ID);
+        testInput.setBorrowerId(USER_ID);
 
         BorrowResponse result = underTest.convert(testInput);
 
@@ -45,7 +45,7 @@ public class BorrowResponseConverterTest {
         assertEquals(BORROW_DATE.toString(dateTimeFormatter), result.getBorrowDate());
         assertEquals(EXP_RETURN_DATE.toString(dateTimeFormatter), result.getExpectedReturnDate());
         assertEquals(TITLE, result.getTitle());
-        assertEquals(USER_ID, result.getUserId());
+        assertEquals(USER_ID, result.getBorrowerId());
 
     }
 }

@@ -5,6 +5,6 @@ import com.pediritti.library.domain.Person;
 
 import java.util.Optional;
 
-public interface UserByEmailQuery {
+public interface PersonByEmailQuery {
     Optional<Person> find(String email);
 }

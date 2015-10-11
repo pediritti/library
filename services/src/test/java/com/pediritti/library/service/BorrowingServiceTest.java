@@ -3,7 +3,7 @@ package com.pediritti.library.service;
 import com.pediritti.library.configuration.IntegrationTestConfig;
 import com.pediritti.library.dtos.input.AuthorInputDTO;
 import com.pediritti.library.dtos.input.BookInputDTO;
-import com.pediritti.library.dtos.input.UserInputDTO;
+import com.pediritti.library.dtos.input.PersonInputDTO;
 import com.pediritti.library.dtos.result.AuthorDTO;
 import com.pediritti.library.dtos.result.BorrowingDTO;
 import org.joda.time.DateTime;
@@ -29,11 +29,11 @@ public class BorrowingServiceTest {
     @Autowired
     private BookService bookService;
     @Autowired
-    private  UserService userService;
+    private PersonService userService;
     @Autowired
     private BorrowingService borrowingService;
 
-    private UserInputDTO userInputDTO;
+    private PersonInputDTO userInputDTO;
     private AuthorInputDTO pelevin;
     private BookInputDTO lifeOfInsects;
     private BookInputDTO buddhasLittleFinger;
@@ -42,10 +42,10 @@ public class BorrowingServiceTest {
 
     @Before
     public void setup() {
-        userInputDTO = new UserInputDTO("John", "Dow", "library", "john.dow@mail.com",
+        userInputDTO = new PersonInputDTO("John", "Dow", "library", "john.dow@mail.com",
                 new DateTime(1968, 05, 30, 23, 59), false);
-        userService.registerUser(userInputDTO);
-        userId = userService.findUserByEmail("john.dow@mail.com").getId();
+        userService.register(userInputDTO);
+        userId = userService.findByEmail("john.dow@mail.com").getId();
 
         pelevin = new AuthorInputDTO("Victor", "Pelevin");
         authorService.registerAuthor(pelevin);
@@ -73,7 +73,7 @@ public class BorrowingServiceTest {
         assertEquals(pelevin.getFirstName() + " " + pelevin.getLastName(), borrowingDTO.getAuthor());
         assertEquals(lifeOfInsects.getTitle(), borrowingDTO.getTitle());
         assertEquals(lofId, borrowingDTO.getBookId());
-        assertEquals(userId, borrowingDTO.getUserId());
+        assertEquals(userId, borrowingDTO.getBorrowerId());
         //TODO: implement once return date logic is finalized
         //assertTrue((new DateTime()).isAfter(borrowingDTO.getExpectedReturnDate()));
         //assertTrue((new DateTime()).isAfter(borrowingDTO.getBorrowDate()));

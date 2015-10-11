@@ -24,7 +24,7 @@ public class BorrowingQueryImpl implements BorrowingQuery {
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public List<Borrowed> find(Borrower user) {
+    public List<Borrowed> find(Borrower borrower) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 
         ParameterExpression<Borrower> parameter = criteriaBuilder.parameter(Borrower.class);
@@ -34,7 +34,7 @@ public class BorrowingQueryImpl implements BorrowingQuery {
         query.select(table).where(criteriaBuilder.equal(table.get(Borrowed_.borrower), parameter));
 
         TypedQuery<Borrowed> typedQuery = entityManager.createQuery(query);
-        typedQuery.setParameter(parameter, user);
+        typedQuery.setParameter(parameter, borrower);
         return typedQuery.getResultList();
     }
 }

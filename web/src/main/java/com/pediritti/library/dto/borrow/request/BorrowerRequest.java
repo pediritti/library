@@ -2,13 +2,13 @@ package com.pediritti.library.dto.borrow.request;
 
 public class BorrowerRequest {
 
-    private long userId;
+    private long borrowerId;
 
-    public long getUserId() {
-        return userId;
+    public long getBorrowerId() {
+        return borrowerId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setBorrowerId(long borrowerId) {
+        this.borrowerId = borrowerId;
     }
 }

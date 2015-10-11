@@ -1,7 +1,7 @@
 package com.pediritti.library.dto.user.request;
 
 
-public class UserEmailRequest {
+public class PersonEmailRequest {
 
     private String email;
 

@@ -3,7 +3,7 @@ package com.pediritti.library.dtos.result;
 
 import org.joda.time.DateTime;
 
-public class UserDTO {
+public class PersonDTO {
 
     private long id;
     private String firstName;
