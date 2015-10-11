@@ -11,6 +11,7 @@ public class PersonDTO {
     private String password;
     private String email;
     private DateTime birth;
+    private boolean admin;
 
     public long getId() {
         return id;
@@ -58,5 +59,13 @@ public class PersonDTO {
 
     public void setBirth(DateTime birth) {
         this.birth = birth;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

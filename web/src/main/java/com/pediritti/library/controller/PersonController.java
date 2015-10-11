@@ -39,7 +39,7 @@ public class PersonController {
     public PersonResponse findById(@RequestBody PersonIdRequest request, HttpServletResponse response) {
         PersonDTO dto;
         try {
-            dto = personService.find(request.getId());
+            dto = personService.find(request.getPersonId());
         } catch (NoSuchElementException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return null;

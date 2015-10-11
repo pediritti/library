@@ -3,13 +3,13 @@ package com.pediritti.library.dto.user.request;
 
 public class PersonIdRequest {
 
-    private long id;
+    private long personId;
 
-    public long getId() {
-        return id;
+    public long getPersonId() {
+        return personId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setPersonId(long personId) {
+        this.personId = personId;
     }
 }

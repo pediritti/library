@@ -15,9 +15,8 @@ import javax.transaction.Transactional;
 
 import java.util.NoSuchElementException;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = IntegrationTestConfig.class)
@@ -43,6 +42,7 @@ public class PersonServiceTest {
         assertEquals(personInputDTO.getPassword(), result.getPassword());
         assertEquals(personInputDTO.getEmail(), result.getEmail());
         assertEquals(personInputDTO.getBirth(), result.getBirth());
+        assertEquals(personInputDTO.isAdmin(), result.isAdmin());
         assertTrue(result.getId() > 0L);
     }
 

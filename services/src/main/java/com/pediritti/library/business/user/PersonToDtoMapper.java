@@ -1,6 +1,7 @@
 package com.pediritti.library.business.user;
 
 
+import com.pediritti.library.domain.Admin;
 import com.pediritti.library.domain.Person;
 import com.pediritti.library.dtos.result.PersonDTO;
 import com.pediritti.library.business.ToDtoMapper;
@@ -20,6 +21,11 @@ public class PersonToDtoMapper extends ToDtoMapper<Person, PersonDTO> {
             dto.setPassword(person.getPassword());
             dto.setEmail(person.getEmail());
             dto.setBirth(new DateTime(person.getBirth()));
+            if(person instanceof Admin) {
+                dto.setAdmin(true);
+            } else {
+                dto.setAdmin(false);
+            }
             return dto;
         };
     }

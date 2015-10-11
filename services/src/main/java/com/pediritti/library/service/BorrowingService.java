@@ -38,8 +38,8 @@ public class BorrowingService {
 
     @Transactional
     public List<BorrowingDTO> listActiveBorrowings(long personId) {
-        Borrower user = getBorrower(personId);
-        List<Borrowed> borrowed = borrowingQuery.find(user);
+        Borrower borrower = getBorrower(personId);
+        List<Borrowed> borrowed = borrowingQuery.find(borrower);
         return borrowToDtoMapper.map(borrowed);
     }
 
@@ -77,7 +77,13 @@ public class BorrowingService {
     private Borrower getBorrower(long personId) {
         Optional<Person> personOptional = personCommand.find(personId);
         if(personOptional.isPresent()) {
-            return (Borrower) personOptional.get();
+            Person person = personOptional.get();
+            if (person instanceof Borrower) {
+                return (Borrower) person;
+            }
+            else {
+                throw new NoSuchElementException("Not a borrower: " + personId);
+            }
         } else {
             throw new NoSuchElementException("Person not found with id: " + personId);
         }

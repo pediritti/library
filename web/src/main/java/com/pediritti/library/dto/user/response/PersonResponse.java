@@ -7,6 +7,7 @@ public class PersonResponse {
     private String lastName;
     private String email;
     private String birth;
+    private boolean isAdmin;
 
     public long getId() {
         return id;
@@ -46,5 +47,13 @@ public class PersonResponse {
 
     public void setBirth(String birth) {
         this.birth = birth;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

@@ -21,6 +21,7 @@ public class PersonResponseConverter implements Converter<PersonDTO, PersonRespo
         response.setBirth(dto.getBirth().toString(dateTimeFormatter));
         response.setEmail(dto.getEmail());
         response.setId(dto.getId());
+        response.setAdmin(dto.isAdmin());
         return response;
     }
 }
