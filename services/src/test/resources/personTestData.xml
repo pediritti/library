@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <BORROWER PERSON_ID="1" FIRSTNAME="John" LASTNAME="Dow" PASSWORD="library" EMAIL="john.dow@mail.com" BIRTH="2000-10-10"/>
+    <ADMIN PERSON_ID="6299173" FIRSTNAME="Application" LASTNAME="Admin" PASSWORD="vf@ld}5ed" EMAIL="app.admin@mail.com" BIRTH="2000-10-10"/>
+</dataset>
