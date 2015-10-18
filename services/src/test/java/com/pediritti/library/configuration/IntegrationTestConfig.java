@@ -10,7 +10,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableJpaRepositories()
-@ComponentScan(basePackages = {"com.pediritti.library.service", "com.pediritti.library.business"})
+@ComponentScan(basePackages = {
+        "com.pediritti.library.service",
+        "com.pediritti.library.business",
+        "com.pediritti.library.util"
+})
 @EntityScan(basePackages = {"com.pediritti.library.domain"})
 @Import({ DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
 public class IntegrationTestConfig {

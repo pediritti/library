@@ -13,17 +13,12 @@ public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "seq")
-    @Column(name="PERSON_ID")
+    @Column(name="person_id")
     private long id;
-    @Column(name="FIRSTNAME")
     private String firstName;
-    @Column(name="LASTNAME")
     private String lastName;
-    @Column(name="PASSWORD")
     private String password;
-    @Column(name="EMAIL")
     private String email;
-    @Column(name="BIRTH")
     private Date birth;
 
     public Person() {
